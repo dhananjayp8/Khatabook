@@ -25,7 +25,7 @@
         <h3 class="capitalize text-2xl font-medium mb-5 mt-10 tracking-tight">
           All hisaab kitaab
         </h3>
-
+        <%if(files.length>0){%> <% files.forEach(function(file){%>
         <div
           class="hisaab w-fit items-center py-3 mb-3 px-5 gap-20 bg-blue-500 flex justify-between rounded-md"
         >
@@ -46,9 +46,11 @@
             ></a>
           </div>
         </div>
+        <%})%> <%}else{%>
         <h3 class="text-zinc-500">
           (only show if) nothing to show, create hisaabs to see something.
         </h3>
+        <%}%>
       </div>
     </main>
   </body>
