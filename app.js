@@ -31,6 +31,18 @@ app.get("/edit/:filename", (req, res) => {
     }
   );
 });
+app.get("/hisaab/:filename", (req, res) => {
+  fs.readFile(
+    `./hisaab/${req.params.filename}`,
+    "utf-8",
+    function (err, filedata) {
+      if (err) {
+        res.status(500).send(err);
+      }
+      res.render("hisaab", { filedata, filename: req.params.filename });
+    }
+  );
+});
 app.post("/update/:filename", (req, res) => {
   fs.writeFile(
     `./hisaab/${req.params.filename}`,
@@ -42,6 +54,14 @@ app.post("/update/:filename", (req, res) => {
       res.redirect("/");
     }
   );
+});
+app.get("/delete/:filename", function (req, res) {
+  fs.unlink(`./hisaab/${req.params.filename}`, function (err) {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    res.redirect("/");
+  });
 });
 app.post("/createhisaab", (req, res) => {
   var currentDate = new Date();
