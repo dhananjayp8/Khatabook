@@ -2,7 +2,8 @@ const express = require("express");
 const path = require("path");
 const fs = require("fs");
 const app = express();
-
+const dotenv = require("dotenv");
+dotenv.config();
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -75,6 +76,6 @@ app.post("/createhisaab", (req, res) => {
     res.redirect("/");
   });
 });
-app.listen(3030, () => {
+app.listen(process.env.PORT || 3031, () => {
   console.log("Server started");
 });
