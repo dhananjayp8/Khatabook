@@ -19,6 +19,42 @@ app.get("/", (req, res) => {
 app.get("/create", (req, res) => {
   res.render("create");
 });
+app.get("/edit/:filename", (req, res) => {
+  fs.readFile(
+    `./hisaab/${req.params.filename}`,
+    "utf-8",
+    function (err, filedata) {
+      if (err) {
+        return res.status(500).send(err);
+      }
+      res.render("edit", { filedata, filename: req.params.filename });
+    }
+  );
+});
+app.post("/update/:filename", (req, res) => {
+  fs.writeFile(
+    `./hisaab/${req.params.filename}`,
+    req.body.content,
+    function (err) {
+      if (err) {
+        return res.status.send(err);
+      }
+      res.redirect("/");
+    }
+  );
+});
+app.post("/createhisaab", (req, res) => {
+  var currentDate = new Date();
+  var date = `${currentDate.getDate()}-${
+    currentDate.getMonth() + 1
+  }-${currentDate.getFullYear()}`;
+  fs.writeFile(`./hisaab/${date}`, req.body.content, function (err) {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    res.redirect("/");
+  });
+});
 app.listen(3030, () => {
   console.log("Server started");
 });
